@@ -67,4 +67,12 @@ export class TasksService {
         await this.taskRepository.save(findId);
         return findId
     }
+
+    // update task description
+    async updateTaskDescription(id:number,newDescription:string):Promise<Tasks>{
+        const findId=await this.getTaskById(id);
+        findId.description=newDescription;
+        await this.taskRepository.save(findId);
+        return findId;
+    }
 }

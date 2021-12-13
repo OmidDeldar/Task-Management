@@ -49,5 +49,11 @@ export class TasksController {
     async updateTaskTitle(@Param('id',ParseIntPipe) id:number,@Body('title') title:string ):Promise<Tasks>{
         return await this.taskService.updateTaskTitle(id,title)
     }
+
+    //update description using id
+    @Post('/:id/description')
+    async updateTaskDescription(@Param('id',ParseIntPipe) id:number,@Body('description') description:string ):Promise<Tasks>{
+        return await this.taskService.updateTaskDescription(id,description);
+    }
 }
 
