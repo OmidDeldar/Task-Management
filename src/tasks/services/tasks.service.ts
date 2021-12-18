@@ -9,6 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TaskRepository } from '../repository/task.repository';
 import { Tasks } from '../entity/task.entity';
 import { take } from 'rxjs';
+import { UpdateTaskTitleDto } from '../dto/update-task-title.Dto';
+import { UpdateTaskDescriptionDto } from '../dto/update-task-description.dto';
 
 @Injectable()
 export class TasksService {
@@ -61,17 +63,19 @@ export class TasksService {
   
 
     // //update task title
-    async updateTaskTitle(id:number,newTitle:string):Promise<Tasks>{
+    async updateTaskTitle(id:number,newTitle:UpdateTaskTitleDto):Promise<Tasks>{
+        const {title}=newTitle
         const findId=await this.getTaskById(id);
-        findId.title=newTitle;
+        findId.title=title;
         await this.taskRepository.save(findId);
         return findId
     }
 
     // update task description
-    async updateTaskDescription(id:number,newDescription:string):Promise<Tasks>{
+    async updateTaskDescription(id:number,newDescription:UpdateTaskDescriptionDto):Promise<Tasks>{
+        const {description}=newDescription
         const findId=await this.getTaskById(id);
-        findId.description=newDescription;
+        findId.description=description;
         await this.taskRepository.save(findId);
         return findId;
     }
