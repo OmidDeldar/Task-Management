@@ -9,8 +9,13 @@ export class AuthService {
          @InjectRepository(UserRepository)
          private userRepository:UserRepository){}
 
-
+    //create user
     async signUp(authCredentialDto:AuthCredentialDto):Promise<void>{
         return this.userRepository.signUp(authCredentialDto)
+    }
+
+    //login user
+    async signIn(authCredentialDto:AuthCredentialDto):Promise<string>{
+        return this.userRepository.validateUserPassword(authCredentialDto)
     }
 }
