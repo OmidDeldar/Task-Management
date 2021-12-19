@@ -7,6 +7,11 @@ import { User } from "../entity/user.entity";
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
 
+    async findAllUser():Promise<User[]>{
+        const users=this.find({deleted:false})
+        return users
+    }
+
     //create user
     async signUp(authCredentialDto:AuthCredentialDto):Promise<void>{
         const {username,password}=authCredentialDto

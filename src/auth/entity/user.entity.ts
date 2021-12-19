@@ -15,6 +15,8 @@ export class User extends BaseEntity {
     @Column()
     salt:string;
 
+    @Column({default:false})
+    deleted:boolean
 
     //validate password for sign in
     async validatePassword(password:string) : Promise<boolean>{
