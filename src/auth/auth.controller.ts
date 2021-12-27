@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, UseGuards, ValidationPipe } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthCredentialDto } from './DTO/auth-credentials.dto';
+import { DeleteUserDto } from './DTO/delete-user.dto';
 import { User } from './entity/user.entity';
+
 @ApiTags('AUTH')
 @Controller('auth')
 export class AuthController {
@@ -22,7 +25,13 @@ export class AuthController {
 
     //login user
     @Post('/signIn')
-    async signIn(@Body(ValidationPipe) authCredentialDto:AuthCredentialDto):Promise<string>{
+    async signIn(@Body(ValidationPipe) authCredentialDto:AuthCredentialDto):Promise<{accessToken:string}>{
         return this.authService.signIn(authCredentialDto);
+    }
+
+    //delete user 
+    @Delete('/deleteUser')
+    async deleteUser(@Body(ValidationPipe) deleteUserDto:DeleteUserDto):Promise<void>{
+        return this.authService.deleteUser(deleteUserDto)
     }
 }
