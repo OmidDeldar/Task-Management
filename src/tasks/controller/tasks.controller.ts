@@ -1,4 +1,4 @@
-import { Controller, Get, Post,Body, Param, Delete, Patch, Query, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post,Body, Param, Delete, Patch, Query, UsePipes, ValidationPipe, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { CreateTaskDto } from '../dto/create-tasks.Dto';
 import { GetTaskFilterDto } from '../dto/get-task-filter-Dto';
@@ -9,9 +9,11 @@ import { Tasks } from '../entity/task.entity';
 import { UpdateTaskTitleDto } from '../dto/update-task-title.Dto';
 import { UpdateTaskDescriptionDto } from '../dto/update-task-description.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Tasks')
 @Controller('tasks')
+ @UseGuards(AuthGuard())
 export class TasksController {
     constructor(private taskService:TasksService){}
 
