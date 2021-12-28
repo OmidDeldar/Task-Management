@@ -10,6 +10,8 @@ import { UpdateTaskTitleDto } from '../dto/update-task-title.Dto';
 import { UpdateTaskDescriptionDto } from '../dto/update-task-description.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/entity/user.entity';
 
 @ApiTags('Tasks')
 @Controller('tasks')
@@ -21,15 +23,21 @@ export class TasksController {
 
     //get all task or filter a task and find it
     @Get('findtasks')
-    getTasks(@Query(ValidationPipe) filterDto:GetTaskFilterDto){
-        return this.taskService.getTasks(filterDto)
+    getTasks(
+        @Query(ValidationPipe) filterDto:GetTaskFilterDto,
+        @GetUser() user:User
+        ){
+        return this.taskService.getTasks(filterDto,user)
     }
 
     //create a task
     @Post('create/task')
-    async createTasks(@Body(ValidationPipe) createtaskDto:CreateTaskDto):Promise<Tasks>
+    async createTasks(
+        @Body(ValidationPipe) createtaskDto:CreateTaskDto,
+        @GetUser() user:User
+        ):Promise<Tasks>
     {
-        return await this.taskService.createTask(createtaskDto);
+        return await this.taskService.createTask(createtaskDto,user);
     }
 
     //find a task by id

@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
-import { AuthCredentialDto } from './DTO/auth-credentials.dto';
-import { DeleteUserDto } from './DTO/delete-user.dto';
-import { User } from './entity/user.entity';
+import { AuthService } from '../services/auth.service';
+import { AuthCredentialDto } from '../DTO/auth-credentials.dto';
+import { DeleteUserDto } from '../DTO/delete-user.dto';
+import { User } from '../entity/user.entity';
 
 @ApiTags('AUTH')
 @Controller('auth')

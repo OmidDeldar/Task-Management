@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthCredentialDto } from './DTO/auth-credentials.dto';
-import { DeleteUserDto } from './DTO/delete-user.dto';
-import { User } from './entity/user.entity';
-import { JwtPayload } from './jwt-payload.interface';
-import { UserRepository } from './repository/user.repository';
+import { AuthCredentialDto } from '../DTO/auth-credentials.dto';
+import { DeleteUserDto } from '../DTO/delete-user.dto';
+import { User } from '../entity/user.entity';
+import { JwtPayload } from '../jwt-payload.interface';
+import { UserRepository } from '../repository/user.repository';
 
 @Injectable()
 export class AuthService {

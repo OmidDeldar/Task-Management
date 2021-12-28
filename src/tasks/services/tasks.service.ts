@@ -11,6 +11,7 @@ import { Tasks } from '../entity/task.entity';
 import { take } from 'rxjs';
 import { UpdateTaskTitleDto } from '../dto/update-task-title.Dto';
 import { UpdateTaskDescriptionDto } from '../dto/update-task-description.dto';
+import { User } from 'src/auth/entity/user.entity';
 
 @Injectable()
 export class TasksService {
@@ -20,14 +21,17 @@ export class TasksService {
     {}
 
     //get all task or filter it
-    async getTasks(getTaskDto:GetTaskFilterDto):Promise<Tasks[]>{
-         return await this.taskRepository.getTasks(getTaskDto)
+    async getTasks(getTaskDto:GetTaskFilterDto,user:User):Promise<Tasks[]>{
+         return await this.taskRepository.getTasks(getTaskDto,user)
     }
     
 
      //create task 
-     async createTask(createTaskDto:CreateTaskDto):Promise<Tasks>{
-         return await this.taskRepository.createTask(createTaskDto)
+     async createTask(
+         createTaskDto:CreateTaskDto,
+         user:User
+         ):Promise<Tasks>{
+         return await this.taskRepository.createTask(createTaskDto,user)
      }
    
 

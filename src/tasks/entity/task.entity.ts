@@ -1,24 +1,29 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { type } from "os";
+import { User } from "src/auth/entity/user.entity";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { taskStatus } from "../enum status/task.status.enum";
 
 @Entity()
-export class Tasks {
-    static taskRepository: any;
-    static save() {
-        throw new Error("Method not implemented.");
-    }
-    @PrimaryGeneratedColumn()
-    id:number
+export class Tasks extends BaseEntity{
+
+    @PrimaryGeneratedColumn('uuid')
+    id:number;
 
     @Column()
-    title:string
+    title:string;
 
     @Column()
-    description:string
+    description:string;
 
     @Column()
-    status:taskStatus
+    status:taskStatus;
 
     @Column({default:false})
-    deleted:boolean
+    deleted:boolean;
+
+    @ManyToOne(type => User , user => user.tasks , {eager : false})
+    user:User;
+
+    @Column()
+    userId:string;
 }
