@@ -42,32 +42,43 @@ export class TasksController {
 
     //find a task by id
     @Get('getTaskById/:id')
-    async getTaskById(@Param('id', ParseIntPipe) id:number):Promise<Tasks>{
-        return await this.taskService.getTaskById(id);
+    async getTaskById(@Param('id') id:number , @GetUser() user:User):Promise<Tasks>{
+        return await this.taskService.getTaskById(id,user);
     }
 
     //delete a task by id
     @Delete('deleteTask/:id')
-    async deleteTaskById(@Param('id',ParseIntPipe) id:number):Promise<string>{
-        return await this.taskService.deleteTaskById(id);
+    async deleteTaskById(
+        @Param('id') id:number,
+        @GetUser() user:User):Promise<string>{
+        return await this.taskService.deleteTaskById(id,user);
     }
 
     //update status of a task by id
-    @Patch('updateStatus/:id/status')
-    async updateStatusById(@Param('id',ParseIntPipe) id:number,@Body('status',TaskStatusValidationPipes) status:taskStatus):Promise<Tasks>{
-        return await this.taskService.updateStatusById(id,status);
+    @Patch('updateStatus/:id')
+    async updateStatusById(
+        @Param('id') id:number,
+        @Body('status',TaskStatusValidationPipes) status:taskStatus,
+        @GetUser() user:User):Promise<Tasks>{
+        return await this.taskService.updateStatusById(id,status,user);
     }
 
     //update title of a task by id
-    @Post('updateTitle/:id/title')
-    async updateTaskTitle(@Param('id',ParseIntPipe) id:number,@Body('title') title:UpdateTaskTitleDto ):Promise<Tasks>{
-        return await this.taskService.updateTaskTitle(id,title)
+    @Post('updateTitle/:id')
+    async updateTaskTitle(
+        @Param('id') id:number,
+        @Body() title:UpdateTaskTitleDto,
+        @GetUser() user:User):Promise<Tasks>{
+        return await this.taskService.updateTaskTitle(id,title,user);
     }
 
     //update description using id
     @Post('updateDescription/:id')
-    async updateTaskDescription(@Param('id',ParseIntPipe) id:number,@Body() description:UpdateTaskDescriptionDto ):Promise<Tasks>{
-        return await this.taskService.updateTaskDescription(id,description);
+    async updateTaskDescription(
+        @Param('id') id:number,
+        @Body() description:UpdateTaskDescriptionDto,
+        @GetUser() user:User):Promise<Tasks>{
+        return await this.taskService.updateTaskDescription(id,description,user);
     }
 }
 

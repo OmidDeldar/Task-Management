@@ -36,18 +36,20 @@ export class TasksService {
    
 
     // //find task by id
-    async getTaskById(id:number):Promise<Tasks>{
-        const found=await this.taskRepository.findOne(id);
+    async getTaskById(id:number,user:User):Promise<Tasks>{
+        const found=await this.taskRepository.findOne({where: { id,userId: user.id }});
          if(!found){
              throw new NotFoundException(`task with id ${id} doesnt exist`);
          }
 
          return found
     }
+
+
     // //delete task by id
-    async deleteTaskById(id:number):Promise<string>{
+    async deleteTaskById(id:number, user:User):Promise<string>{
         //const found=this.taskRepository.findOne(id);
-        const founded=await this.getTaskById(id)
+        const founded=await this.getTaskById(id, user)
         if (!founded) 
         throw new NotFoundException()
          founded.deleted=true;
@@ -56,8 +58,8 @@ export class TasksService {
     }
 
     //update status by id
-    async updateStatusById(id:number,status:taskStatus):Promise<Tasks>{
-        const task=await this.getTaskById(id);
+    async updateStatusById(id:number,status:taskStatus, user:User):Promise<Tasks>{
+        const task=await this.getTaskById(id,user);
         task.status=status;
         await this.taskRepository.save(task);
         return task;
@@ -67,18 +69,18 @@ export class TasksService {
   
 
     // //update task title
-    async updateTaskTitle(id:number,newTitle:UpdateTaskTitleDto):Promise<Tasks>{
-        const {title}=newTitle
-        const findId=await this.getTaskById(id);
+    async updateTaskTitle(id:number,newTitle:UpdateTaskTitleDto, user:User):Promise<Tasks>{
+        const {title}=newTitle;
+        const findId=await this.getTaskById(id,user);
         findId.title=title;
         await this.taskRepository.save(findId);
-        return findId
+        return findId;
     }
 
     // update task description
-    async updateTaskDescription(id:number,newDescription:UpdateTaskDescriptionDto):Promise<Tasks>{
-        const {description}=newDescription
-        const findId=await this.getTaskById(id);
+    async updateTaskDescription(id:number,newDescription:UpdateTaskDescriptionDto,user:User):Promise<Tasks>{
+        const {description}=newDescription;
+        const findId=await this.getTaskById(id,user);
         findId.description=description;
         await this.taskRepository.save(findId);
         return findId;
